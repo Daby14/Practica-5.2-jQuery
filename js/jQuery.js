@@ -222,6 +222,7 @@ function addAction(action) {
 
 }
 
+//!CONTROL DE TECLAS
 //Controlamos si se pulsa una tecla
 $(document).ready(function () {
     $(document).keydown(function (event) {
