@@ -27,9 +27,9 @@ estiloAreaPrin = $('div');
 //Le añadimos las propiedades necesarias a dicha area
 estiloAreaPrin.addClass("container");
 estiloAreaPrin.css({
-    'border': '2px solid red',
-    'height': '400px',
-    'position': 'relative'
+    border: '2px solid red',
+    height: '400px',
+    position: 'relative'
 });
 
 //!COORDENADAS X, Y DEL RATÓN
@@ -62,12 +62,12 @@ estiloCuboPrin = $(cube);
 
 //Le añadimos las propiedades necesarias a dicho cubo
 estiloCuboPrin.css({
-    'background': 'red',
-    'width': '50px',
-    'height': '50px',
-    'position': 'absolute',
-    'top': '100px',
-    'left': '150px'
+    background: 'red',
+    width: '50px',
+    height: '50px',
+    position: 'absolute',
+    top: '100px',
+    left: '150px'
 });
 
 //!MOVIMIENTO DEL CUBO PRINCIPAL
@@ -187,12 +187,12 @@ function addAction(action) {
     span.textContent = action;
     span2.addClass("span2");
     span2.css({
-        'padding': '10px',
-        'border': '1px solid #ddd',
-        'display': 'block',
-        'float': 'left',
-        'margin': '2px',
-        'cursor': 'pointer',
+        padding: '10px',
+        border: '1px solid #ddd',
+        display: 'block',
+        float: 'left',
+        margin: '2px',
+        cursor: 'pointer',
     });
 
     //Evento que cambio el color del span si el ratón está encima de dicho span
@@ -337,19 +337,19 @@ let cubes = [];
 let instance = 0;
 
 //Creamos el área secundaria donde vamos a ir almacenando los cubos eliminados
-let area2 = document.createElement("div");
+let cubosBorrados = document.createElement("div");
 
 //Añadimos este area secundaria al main (la añadimos después del area principal por eso uso el método after)
-area.after(area2);
+area.after(cubosBorrados);
 
 //Accedemos al area secundaria que acabamos de crear
-estiloAreaSecun = $(area2);
+estiloAreaSecun = $(cubosBorrados);
 
 //Le añadimos los estilos necesarios
 estiloAreaSecun.css({
-    'border': '2px solid red',
-    'height': '100px',
-    'position': 'relative'
+    border: '2px solid red',
+    height: '100px',
+    position: 'relative'
 });
 
 //!EVENTO PERSONALIZADO
@@ -385,12 +385,12 @@ let miEvento = new Event(areaPrin.on("click", function (e) {
         cuboNuevo.text(instance);
         cuboNuevo.addClass("cube2");
         cuboNuevo.css({
-            'background': 'red',
-            'width': '50px',
-            'height': '50px',
-            'position': 'absolute',
-            'left': x + 'px',
-            'top': y + 'px'
+            background: 'red',
+            width: '50px',
+            height: '50px',
+            position: 'absolute',
+            left: x + 'px',
+            top: y + 'px'
         });
 
         //Si hacemos click en el nuevo cubo
@@ -416,15 +416,15 @@ let miEvento = new Event(areaPrin.on("click", function (e) {
             ejeX = ejeX + 80;
 
             //Si no caben más cubos en dicha area secundaria la incrementamos (incrementamos la altura de dicha area secundaria)
-            if (ejeX > area2.offsetWidth - cub.offsetWidth) {
+            if (ejeX > cubosBorrados.offsetWidth - cub.offsetWidth) {
                 heightAreaSecun += 100;
-                area2.style.height = heightAreaSecun + "px";
+                cubosBorrados.style.height = heightAreaSecun + "px";
                 ejeY = ejeY + 80;
                 ejeX = 50;
             } else {
 
                 //En el caso de que no esté llena el area secundaria la añadimos
-                area2.append(cub);
+                cubosBorrados.append(cub);
             }
 
         });
