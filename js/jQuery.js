@@ -16,7 +16,7 @@ main = $('#main');
 //!AREA PRINCIPAL
 
 //Creamos el area principal
-area = document.createElement("div");
+area = $("<div></div>");
 
 //Le añadimos al main el area principal donde vamos a trabajar (el método preprend es para añadir el elemento al principio del elemento main)
 main.prepend(area);
@@ -45,15 +45,16 @@ function showCoords(event) {
     x = event.offsetX;
     y = event.offsetY;
 
-    document.getElementById("x").value = x;
-    document.getElementById("y").value = y;
+    //Cambiamos el valor de la x y de la y
+    $("#x").val(x)
+    $("#y").val(y)
 
 }
 
 //!CUBO PRINCIPAL
 
 //Creamos el cubo principal
-cube = document.createElement("div");
+cube = $('<div></div>');
 
 //Le añadimos el cubo que acabamos de crear al area principal
 area.append(cube);
@@ -74,47 +75,97 @@ estiloCuboPrin.css({
 
 //Método para mover el cubo hacia arriba
 function moveUp(cube) {
-    let top = cube.offsetTop;
-    top -= 10;
+
+    //Guardamos la posición del cubo
+    let position = $(cube).offset();
+
+    //Accedemos a la posición de la parte de arriba del cubo
+    let top = position.top;
+
+    top -= 30;
 
     //Controlamos que al moverse el cubo no se salga por la parte de arriba del área
     top = top < 0 ? 0 : top;
-    cube.style.top = top + "px";
+
+    //Modificamos la propiedad top del cubo principal
+    $(cube).css({
+        'top': top + 'px',
+    })
+
 }
 
 //Método para mover el cubo hacia abajo
 function moveDown(cube) {
-    let top = cube.offsetTop;
-    top += 10;
+
+    //Guardamos la posición del cubo
+    let position = $(cube).offset();
+
+    //Guardamos la posición del cubo y del area respecto al offsetHeight
+    let positionCube = $(cube).get(0).offsetHeight;
+    let positionArea = $(area).get(0).offsetHeight;
+
+    //Accedemos a la posición de la parte de abajo del cubo
+    let top = position.top;
+
+    top += 30;
+
     //Controlamos que al moverse el cubo no se salga por la parte de abajo del área
     top =
-        top > area.offsetHeight - cube.offsetHeight
-            ? area.offsetHeight - cube.offsetHeight
+        top > positionArea - positionCube
+            ? positionArea - positionCube
             : top;
-    cube.style.top = top + "px";
+
+    //Modificamos la propiedad top del cubo principal
+    $(cube).css({
+        'top': top + 'px',
+    })
 }
 
 //Método para mover el cubo hacia la izquierda
 function moveLeft(cube) {
-    let left = cube.offsetLeft;
-    left -= 10;
+
+    //Guardamos la posición del cubo
+    let position = $(cube).offset();
+
+    //Accedemos a la posición de la parte de la izquierda del cubo
+    let left = position.left;
+
+    left -= 30;
 
     //Controlamos que al moverse el cubo no se salga por la parte izquierda del área
     left = left < 0 ? 0 : left;
-    cube.style.left = left + "px";
+
+    //Modificamos la propiedad left del cubo principal
+    $(cube).css({
+        'left': left + 'px',
+    })
 }
 
 //Método para mover el cubo hacia la derecha
 function moveRight(cube) {
-    let left = cube.offsetLeft;
-    left += 10;
+
+    //Guardamos la posición del cubo
+    let position = $(cube).offset();
+
+    //Guardamos la posición del cubo y del area respecto al offsetWidth
+    let positionCube = $(cube).get(0).offsetWidth;
+    let positionArea = $(area).get(0).offsetWidth;
+
+    //Accedemos a la posición de la parte de la derecha del cubo
+    let left = position.left;
+
+    left += 30;
 
     //Controlamos que al moverse el cubo no se salga por la parte derecha del área
     left =
-        left > area.offsetWidth - cube.offsetWidth
-            ? area.offsetWidth - cube.offsetWidth
+        left > positionArea - positionCube
+            ? positionArea - positionCube
             : left;
-    cube.style.left = left + "px";
+
+    //Modificamos la propiedad left del cubo principal
+    $(cube).css({
+        'left': left + 'px',
+    })
 }
 
 //Método para cambiarle el color de manera aleatoria al cubo
@@ -122,40 +173,54 @@ function randomColor(cube) {
     let r = Math.floor(Math.random() * 256);
     let g = Math.floor(Math.random() * 256);
     let b = Math.floor(Math.random() * 256);
-    cube.style.background = `rgb(${r}, ${g}, ${b})`;
+    $(cube).css({
+        background: `rgb(${r}, ${g}, ${b}`
+    })
 }
 
 //Método para aumentar el tamaño del cubo
 function addSize(cube) {
-    let width = cube.offsetWidth;
-    let height = cube.offsetHeight;
+
+    //Guardamos la posición del cubo
+    let position = $(cube).offset();
+
+    let width = $(cube).get(0).offsetWidth;
+    let height = $(cube).get(0).offsetHeight;
+
+    let positionArea = $(area).get(0).offsetHeight;
 
     //Controlamos que no se salga del área el cubo tras hacerlo más grande
-    if (cube.offsetTop < (area.offsetHeight - height)) {
+    if (position.top < (positionArea - height)) {
         width += 5;
         height += 5;
     }
 
-    cube.style.width = width + "px";
-    cube.style.height = height + "px";
+    cube.css({
+        width: width + "px",
+        height: height + "px"
+    });
 
 }
 
 //Método para disminuir el tamaño del cubo
 function removeSize(cube) {
-    let width = cube.style.width;
-    let height = cube.style.height;
+
+    let width = $(cube).css("width");
+    let height = $(cube).css("height");
 
     //Controlamos que el tamaño mínimo del cubo es de 10px, por lo que no se puede hacer más pequeño
     if (width !== "10px" && height !== "10px") {
-        let width2 = cube.offsetWidth;
-        let height2 = cube.offsetHeight;
+        let width2 = $(cube).get(0).offsetWidth;
+        let height2 = $(cube).get(0).offsetHeight;
 
         width2 -= 5;
         height2 -= 5;
 
-        cube.style.width = width2 + "px";
-        cube.style.height = height2 + "px";
+        cube.css({
+            width: width2 + "px",
+            height: height2 + "px"
+        });
+
     }
 
 }
@@ -169,7 +234,10 @@ let acctions = [];
 function addAction(action) {
 
     //Creamos el span
-    let span = document.createElement("span");
+    let span = $("<span></span>");
+
+    //Añadimos al area principal el span creado
+    area.append(span);
 
     //Añadimos el span creado y la acción en el array acctions
     acctions.push({
@@ -177,14 +245,11 @@ function addAction(action) {
         span: span,
     });
 
-    //Añadimos al area principal el span creado
-    area.append(span);
-
     //Accedemos al span que acabamos de crear
     let span2 = $(span);
 
     //Le asignamos las propiedades/estilos necesarios
-    span.textContent = action;
+    span2.text(action);
     span2.addClass("span2");
     span2.css({
         padding: '10px',
@@ -197,14 +262,20 @@ function addAction(action) {
 
     //Evento que cambio el color del span si el ratón está encima de dicho span
     span2.on("mouseenter", function () {
-        this.style.backgroundColor = "red";
-        this.style.color = "white";
+        $(this).css({
+            backgroundColor: "red",
+            color: "white"
+        })
     });
 
     //Evento que cambio el color del span si el ratón deja de estar encima de dicho span
     span2.on("mouseleave", function () {
-        this.style.backgroundColor = "white";
-        this.style.color = "black";
+        $(this).css({
+            backgroundColor: 'white',
+            color: 'black'
+        })
+        // this.style.backgroundColor = "white";
+        // this.style.color = "black";
     });
 
     //Evento que al hacer click sobre el span lo elimina
@@ -337,7 +408,9 @@ let cubes = [];
 let instance = 0;
 
 //Creamos el área secundaria donde vamos a ir almacenando los cubos eliminados
-let cubosBorrados = document.createElement("div");
+// let cubosBorrados = document.createElement("div");
+
+let cubosBorrados = $("<div></div>");
 
 //Añadimos este area secundaria al main (la añadimos después del area principal por eso uso el método after)
 area.after(cubosBorrados);
@@ -364,7 +437,10 @@ let miEvento = new Event(areaPrin.on("click", function (e) {
     if (e.target.classList == "container") {
 
         //Creamos el nuevo cubo
-        let cub = document.createElement("div");
+        let cub = $("<div></div>");
+
+        //Añadimos al area principal dicho cubo
+        area.append(cub);
 
         //Incrementamos la instacia
         instance++;
@@ -374,9 +450,6 @@ let miEvento = new Event(areaPrin.on("click", function (e) {
             instance: instance,
             cube: cub,
         });
-
-        //Añadimos al area principal dicho cubo
-        area.append(cub);
 
         //Accedemos al cubo nuevo que acabamos de crear
         let cuboNuevo = $(cub);
@@ -397,7 +470,7 @@ let miEvento = new Event(areaPrin.on("click", function (e) {
         cuboNuevo.on("click", function () {
 
             //Mostramos la instancia del cubo que hemos pinchado
-            console.log(cub.textContent);
+            console.log(cuboNuevo.text());
 
             //Comprobamos si existe el cubo que hemos pinchado
             let index = cubes.findIndex((cu) => {
@@ -409,16 +482,26 @@ let miEvento = new Event(areaPrin.on("click", function (e) {
             this.remove();
 
             //Le asignamos las nuevas coordenadas donde se va a almacenar en el area secundaria
-            cub.style.top = ejeY + "px";
-            cub.style.left = ejeX + "px";
+
+            cub.css({
+                top: ejeY + "px",
+                left: ejeX + "px",
+            })
 
             //Incrementamos el eje de la x
             ejeX = ejeX + 80;
 
+            let positionCuboBorrado = $(cubosBorrados).get(0).offsetWidth;
+            let positionCuboNuevo = $(cub).get(0).offsetWidth;
+
             //Si no caben más cubos en dicha area secundaria la incrementamos (incrementamos la altura de dicha area secundaria)
-            if (ejeX > cubosBorrados.offsetWidth - cub.offsetWidth) {
+            if (ejeX > positionCuboBorrado - positionCuboNuevo) {
                 heightAreaSecun += 100;
-                cubosBorrados.style.height = heightAreaSecun + "px";
+
+                cubosBorrados.css({
+                    height: heightAreaSecun + "px"
+                });
+
                 ejeY = ejeY + 80;
                 ejeX = 50;
             } else {
@@ -434,4 +517,4 @@ let miEvento = new Event(areaPrin.on("click", function (e) {
 }));
 
 //Disparamos el evento personalizado
-area.dispatchEvent(miEvento);
+area[0].dispatchEvent(miEvento);
