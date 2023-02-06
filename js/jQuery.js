@@ -59,6 +59,7 @@ cube = $('<div></div>');
 //Le añadimos el cubo que acabamos de crear al area principal
 area.append(cube);
 
+//Accedemos al cubo que acabamos de crear
 estiloCuboPrin = $(cube);
 
 //Le añadimos las propiedades necesarias a dicho cubo
@@ -173,6 +174,8 @@ function randomColor(cube) {
     let r = Math.floor(Math.random() * 256);
     let g = Math.floor(Math.random() * 256);
     let b = Math.floor(Math.random() * 256);
+
+    //Le aplicamos los estilos necesarios
     $(cube).css({
         background: `rgb(${r}, ${g}, ${b}`
     })
@@ -184,9 +187,11 @@ function addSize(cube) {
     //Guardamos la posición del cubo
     let position = $(cube).offset();
 
+    //Accedemos al width y al height del cubo
     let width = $(cube).get(0).offsetWidth;
     let height = $(cube).get(0).offsetHeight;
 
+    //Accedemos a la posición del area
     let positionArea = $(area).get(0).offsetHeight;
 
     //Controlamos que no se salga del área el cubo tras hacerlo más grande
@@ -195,6 +200,7 @@ function addSize(cube) {
         height += 5;
     }
 
+    //Le aplicamos los estilos necesarios al cubo
     cube.css({
         width: width + "px",
         height: height + "px"
@@ -205,17 +211,21 @@ function addSize(cube) {
 //Método para disminuir el tamaño del cubo
 function removeSize(cube) {
 
+    //Accedemos al width y al height del cubo
     let width = $(cube).css("width");
     let height = $(cube).css("height");
 
     //Controlamos que el tamaño mínimo del cubo es de 10px, por lo que no se puede hacer más pequeño
     if (width !== "10px" && height !== "10px") {
+
+        //En caso de que el cubo pueda seguir disminuyendo de tamaño, accedemos a sus propiedades (width y height)
         let width2 = $(cube).get(0).offsetWidth;
         let height2 = $(cube).get(0).offsetHeight;
 
         width2 -= 5;
         height2 -= 5;
 
+        //Le aplicamos los estilos necesarios
         cube.css({
             width: width2 + "px",
             height: height2 + "px"
@@ -274,8 +284,6 @@ function addAction(action) {
             backgroundColor: 'white',
             color: 'black'
         })
-        // this.style.backgroundColor = "white";
-        // this.style.color = "black";
     });
 
     //Evento que al hacer click sobre el span lo elimina
@@ -294,6 +302,7 @@ function addAction(action) {
 }
 
 //!CONTROL DE TECLAS
+
 //Controlamos si se pulsa una tecla
 $(document).ready(function () {
     $(document).keydown(function (event) {
@@ -408,8 +417,6 @@ let cubes = [];
 let instance = 0;
 
 //Creamos el área secundaria donde vamos a ir almacenando los cubos eliminados
-// let cubosBorrados = document.createElement("div");
-
 let cubosBorrados = $("<div></div>");
 
 //Añadimos este area secundaria al main (la añadimos después del area principal por eso uso el método after)
@@ -456,7 +463,7 @@ let miEvento = new Event(areaPrin.on("click", function (e) {
 
         //Le añadimos las propiedades/estilos correspondientes
         cuboNuevo.text(instance);
-        cuboNuevo.addClass("cube2");
+        cuboNuevo.addClass("cubeSecun");
         cuboNuevo.css({
             background: 'red',
             width: '50px',
@@ -482,7 +489,6 @@ let miEvento = new Event(areaPrin.on("click", function (e) {
             this.remove();
 
             //Le asignamos las nuevas coordenadas donde se va a almacenar en el area secundaria
-
             cub.css({
                 top: ejeY + "px",
                 left: ejeX + "px",
@@ -491,6 +497,7 @@ let miEvento = new Event(areaPrin.on("click", function (e) {
             //Incrementamos el eje de la x
             ejeX = ejeX + 80;
 
+            //Accedemos a la posición del cubo borrado y a la del nuevo cubo
             let positionCuboBorrado = $(cubosBorrados).get(0).offsetWidth;
             let positionCuboNuevo = $(cub).get(0).offsetWidth;
 
@@ -498,6 +505,7 @@ let miEvento = new Event(areaPrin.on("click", function (e) {
             if (ejeX > positionCuboBorrado - positionCuboNuevo) {
                 heightAreaSecun += 100;
 
+                //Le aplicamos los estilos necesarios al cubo borrado
                 cubosBorrados.css({
                     height: heightAreaSecun + "px"
                 });
