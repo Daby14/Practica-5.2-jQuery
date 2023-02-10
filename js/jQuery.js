@@ -1,11 +1,12 @@
 //Declaramos las variables con las que vamos a trabajar
 let main;
 let area;
-let coords;
 let cube;
 let ejeX = 50;
 let ejeY = 25;
 let heightAreaSecun = 100;
+
+//Estas variables son para darle estilos tanto al area principal como a la secundaria como al cubo principal
 let estiloAreaPrin;
 let estiloCuboPrin;
 let estiloAreaSecun;
@@ -34,11 +35,8 @@ estiloAreaPrin.css({
 
 //!COORDENADAS X, Y DEL RATÓN
 
-//Accedemos al area que acabamos de crear
-coords = $('div');
-
-//Le añadimos un evento para que nos muestre las coordenadas del ratón dentro de dicha area (el método on es para añadir un evento mediante jquery)
-coords.on("mousemove", showCoords);
+//Le añadimos un evento al area principal para que nos muestre las coordenadas del ratón dentro de dicha area (el método on es para añadir un evento mediante jquery)
+area.on("mousemove", showCoords);
 
 //Método que calcula las coordenadas del ratón dentro del área del proyecto
 function showCoords(event) {
@@ -270,7 +268,7 @@ function addAction(action) {
         cursor: 'pointer',
     });
 
-    //Evento que cambio el color del span si el ratón está encima de dicho span
+    //Evento que cambia el color del span si el ratón está encima de dicho span
     span2.on("mouseenter", function () {
         $(this).css({
             backgroundColor: "red",
@@ -278,7 +276,7 @@ function addAction(action) {
         })
     });
 
-    //Evento que cambio el color del span si el ratón deja de estar encima de dicho span
+    //Evento que cambia el color del span si el ratón deja de estar encima de dicho span
     span2.on("mouseleave", function () {
         $(this).css({
             backgroundColor: 'white',
